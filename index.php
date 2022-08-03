@@ -155,7 +155,7 @@ require_once('Connection.php');
     </div>
   </div>
 </div>
-</form>
+
 
 
  
@@ -187,19 +187,26 @@ require_once('Connection.php');
     <tr>
 	 
 	
- <?php 
-		   $stmt = $conexao->prepare("SELECT * FROM produtos ORDER BY id_produto DESC");
+ 
+
+	
+	
+	
+	<?php	   
+		   
+		   $stmt = $conexao->prepare("SELECT * FROM produtos INNER JOIN categorias ON id_categoria=id_categorias INNER JOIN fabricantes ON id_fabricante = id_fabricantes ORDER BY id_produto DESC");
  
         if ($stmt->execute()) {
             while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
+
 				?>
 				<tr>
 				 <td><?php echo $rs->id_produto; ?></td>
 				  <td><?php echo $rs->nome; ?></td>
-				   <td><?php echo $rs->id_categoria; ?></td>
-				  <td><?php echo $rs->id_fabricante; ?></td>
+				   <td><?php echo $rs->nome_categoria; ?></td>
+				  <td><?php echo $rs->nome_fabricantes; ?></td>
 				   <td><?php echo $rs->preco; ?></td>
- <td> <button type="submit" class="btn btn-primary">EDITAR</button> <a class="btn btn-primary" href='#'onclick='confirmacao("<?php echo $rs->id_produto; ?>")'>EXCLUIR</a></td>
+ <td> <a onclick="abrir('<?php echo $rs->id_produto; ?>');"class="btn btn-primary">EDITAR</a> <a class="btn btn-primary" href='#'onclick='confirmacao("<?php echo $rs->id_produto; ?>")'>EXCLUIR</a></td>
 	   </tr>
 
 				
@@ -220,9 +227,96 @@ require_once('Connection.php');
 </table></div>
   <div class="col-6 col-md-2"></div>
 </div>
+
+<div style="background-color:#FFE4B5;border-radius:10px;"id="dialog">
+
+
+    <div class="col align-self-end">
+<form style="padding:30px;"action="http://localhost/projetoValiacao/editar.php" method="post">
+  <div id="prod"> </div>
+
+  <div class="mb-3">
+    <label Style="margin-Right:85%;color:#4169E1;"  for="exampleInputEmail1" class="form-label">FABRICANTE</label>
+ 
+ 
+ <select id="fabrica"name="fabrica"class="form-select" aria-label="Default select example">
+ 
+  <?php 
+		   $stmt = $conexao->prepare("SELECT * FROM fabricantes ORDER BY id_fabricantes DESC");
+ 
+        if ($stmt->execute()) {
+            while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
+				?>
+				 <option selected value="<?php echo $rs->id_fabricantes; ?>"><?php echo $rs->nome_fabricantes; ?></option>
+ 
+
+				
+		<?php
+		
+		}
+		}
+		
+		?>
+	
+
+ 
+ 
+ 
+ 
+ 
+  </select></div>
+    <div class="mb-3">
+    <label Style="margin-Right:85%;color:#4169E1;" for="exampleInputEmail1" class="form-label">CATEGORIA</label>
+<div class="col align-self-center">
+       <select id="catego"name="catego"class="form-select" aria-label="Default select example">
+  
+  
+  
+  
+   <?php 
+		   $stmt = $conexao->prepare("SELECT * FROM categorias ORDER BY id_categorias DESC");
+ 
+        if ($stmt->execute()) {
+            while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
+				?>
+				 <option selected value="<?php echo $rs->id_categorias; ?>"><?php echo $rs->nome_categoria; ?></option>
+ 
+
+				
+		<?php
+		
+		}
+		}
+		
+		?>
+  
+  </select>
+    </div> </div>
+
+
+
+
+
+
+ 
+  
+  <button id="editar"name="EditarProduto"type="submit" class="btn btn-primary">EDITAR PRODUTO</button>
+</form>
+    </div>
+  </div>
+</div>
+
+
+</div>
     <!-- jQuery (obrigatório para plugins JavaScript do Bootstrap) -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
+
+ <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+ 
+
+
 <script>
 
 
@@ -233,6 +327,51 @@ if(confirm('Deseja realmente excluir este registro?')){
 
 		}}
 
+
+
+$(document).ready(function () {
+			
+			$( "#dialog" ).hide();
+			});
+
+
+
+
+//ajax preenche modal de ediçao
+
+
+function preencherEditar(id){
+	
+
+ 
+ $.ajax({
+     type: "POST",
+	  
+     url: "http://localhost/projetoValiacao/editar.php",
+	  
+     data: {id:id},
+     success: function(msg){
+		 
+
+       $("#prod").html(msg);
+    }	
+  });
+
+	
+}//fim método
+  function abrir(id){
+	  
+	  
+	  
+	  
+	  
+	  
+	
+	 
+	 $( "#dialog" ).dialog();  
+	 preencherEditar(id);
+	
+  }
 </script>
 
 
