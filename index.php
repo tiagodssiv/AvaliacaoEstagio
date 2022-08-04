@@ -158,20 +158,118 @@ require_once('Connection.php');
 
 
 
- 
+ <?php
+ if(isset($_POST['buc'])){
+	$nome=$_POST['busca'];
+	
+	?>
+	
+	<div id="divb1"> 
 <div style="margin-top:5%;margin-bottom:5%;"class="row">
   <div class="col-12 col-md-2"></div>
   <div class="col-6 col-md-8">        
    
 	  
 	  <div class="row">
-  <div class="col-12 col-md-6"><form style="margin-bottom:10px;"class="d-flex" role="search">
-        <input name="busca"class="form-control me-2" type="text" placeholder="BUSCAR PRODUTO" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">BUSCAR</button>
+  <div class="col-12 col-md-6"><form action="http://localhost/projetoValiacao/index.php"method="post"style="margin-bottom:10px;"class="d-flex" role="search">
+        <input id="campoBusca"onkeyup="buscarRegistros();"name="busca"class="form-control me-2" type="text" placeholder="BUSCAR PRODUTO" aria-label="Search">
+        <button name="buc"class="btn btn-outline-success" type="submit">BUSCAR</button>
       </form>
 	  </div>
   
 </div>
+
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">NOME PRODUTO</th>
+      <th scope="col">CATEGORIA</th>
+	   <th scope="col">FABRICANTE</th>
+      <th scope="col">PREÇO</th>
+	   <th scope="col">OPÇÕES<a style="margin-left:10px;"href="http://localhost/projetoValiacao/index.php/#divb" class="btn btn-danger">CANCELAR</a></th>
+	  
+    </tr>
+  </thead>
+  <tbody>
+    
+	 
+	
+ 
+
+	
+	
+	
+	<?php	   
+		   
+	
+	  $dados="";
+         
+	    $dados = "%" . $_POST['busca'] . "%";
+        $stmt = $conexao->prepare(" SELECT * FROM produtos INNER JOIN categorias ON id_categoria=id_categorias INNER JOIN fabricantes ON id_fabricante = id_fabricantes WHERE nome LIKE  ? ORDER BY id_produto DESC ");
+        $stmt->bindParam(1, $dados);
+        if ($stmt->execute()) {
+			
+			 while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
+				 
+				 
+				?>
+				<tr>
+				
+				 <td><?php echo $rs->id_produto; ?></td>
+				  <td><?php echo $rs->nome; ?></td>
+				   <td><?php echo $rs->nome_categoria; ?></td>
+				  <td><?php echo $rs->nome_fabricantes; ?></td>
+				   <td><?php echo $rs->preco; ?></td>
+ <td> <a onclick="abrir('<?php echo $rs->id_produto; ?>');"class="btn btn-primary">EDITAR</a> <a class="btn btn-primary" href='#'onclick='confirmacao("<?php echo $rs->id_produto; ?>")'>EXCLUIR</a></td>
+	   </tr>
+
+				
+		<?php
+		
+		}
+
+		}
+	
+		?>
+     
+     
+     
+     
+	 
+  
+  
+  </tbody>
+</table> </div>
+  <div class="col-6 col-md-2"></div>
+</div></div>
+	
+	
+	
+	
+	
+<?php	
+}
+
+else{
+ 
+ ?>
+ 
+ 
+<div id="divb"style="margin-top:5%;margin-bottom:5%;"class="row">
+  <div class="col-12 col-md-2"></div>
+  <div class="col-6 col-md-8">        
+   
+	  
+	  <div class="row">
+  <div class="col-12 col-md-6"><form action="http://localhost/projetoValiacao/index.php"method="post"style="margin-bottom:10px;"class="d-flex" role="search">
+        <input id="campoBusca"onkeyup="buscarRegistros();"name="busca"class="form-control me-2" type="text" placeholder="BUSCAR PRODUTO" aria-label="Search">
+        <button name="buc"class="btn btn-outline-success" type="submit">BUSCAR</button>
+      </form>
+	  </div>
+  
+</div>
+
   <table class="table">
   <thead>
     <tr>
@@ -184,12 +282,11 @@ require_once('Connection.php');
     </tr>
   </thead>
   <tbody>
-    <tr>
+    
 	 
 	
  
 
-	
 	
 	
 	<?php	   
@@ -201,6 +298,7 @@ require_once('Connection.php');
 
 				?>
 				<tr>
+				
 				 <td><?php echo $rs->id_produto; ?></td>
 				  <td><?php echo $rs->nome; ?></td>
 				   <td><?php echo $rs->nome_categoria; ?></td>
@@ -220,13 +318,19 @@ require_once('Connection.php');
      
      
      
-	  
+	 
   
   
   </tbody>
 </table></div>
   <div class="col-6 col-md-2"></div>
 </div>
+<?php }?>
+
+
+
+
+
 
 <div style="background-color:#FFE4B5;border-radius:10px;"id="dialog">
 
@@ -372,6 +476,31 @@ function preencherEditar(id){
 	 preencherEditar(id);
 	
   }
+  
+  function buscarRegistros(){
+
+  var dados = document.getElementById("campoBusca").value;
+
+      
+	 
+ $.ajax({
+     type: "POST",
+	  
+     url: "http://localhost/projetoValiacao/buscar.php",
+	  
+     data: {dados:dados},
+     success: function(msg){
+		 
+ //alert(msg);
+//  $("#tab").hide();
+       $("#tab").html("");
+	   $("#tab").html(msg);
+    }	
+  });
+
+	
+}
+  
 </script>
 
 

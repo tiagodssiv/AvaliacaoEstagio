@@ -18,28 +18,23 @@ require_once('Connection.php');
 
 
 if(isset($_POST['scf'])){
+if(!empty($_POST['categoria1'])){
+	 $categoria=$_POST['categoria1'];
+}
 	
-	if(isset($_POST['categoria1'])){
-		
-		 $categoria=$_POST['categoria1'];
-		
-	}
-	 	if(isset($_POST['categoria2'])){
-		
-		$categoria=$_POST['categoria2'];
-		
-	}
+	if(!empty($_POST['categoria2'])){
+	 $categoria=$_POST['categoria2'];
+}
+	if(!empty($_POST['categoria3'])){
+	 $categoria=$_POST['categoria3'];
+}
+
+	if(!empty($_POST['fabricante'])){
+$fabricante=$_POST['fabricante'];
+}
+
 	
-		if(isset($_POST['categoria3'])){
-		
-		$categoria=$_POST['categoria3'];
-		
-	}
-		if(isset($_POST['fabricante'])){
-		
-		$fabricante=$_POST['fabricante'];
-		
-	}
+	
 	//echo '<script>alert('.$cliente.');</script>';
   // echo '<script>location.href="vencedorLeilao.php?leilao='.$var.'"</script>';
 
@@ -118,7 +113,7 @@ if(isset($_POST['salvarProduto'])){
         if ($stmt->execute()) {
             if ($stmt->rowCount() > 0) {
                 echo "<script>alert('Produto Cadastrado com Sucesso!');</script>";
-             	 echo '<script>location.href="http://localhost/projetoValiacao/"</script>';
+             	 echo '<script>location.href="http://localhost/projetoValiacao/index.php/#divb"</script>';
             } else {
                // echo "Erro ao tentar efetivar cadastro";
             }

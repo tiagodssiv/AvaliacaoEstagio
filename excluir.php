@@ -12,7 +12,7 @@ $id=$_GET['id'];
         $stmt->bindParam(1, $id);
         if ($stmt->execute()) {
             echo "<script>alert('Excluído com sucesso!');</script>";
-			  echo '<script>location.href="http://localhost/projetoValiacao/"</script>';
+			  echo '<script>location.href="http://localhost/projetoValiacao/index.php/#divb"</script>';
 			
           
         } else {
@@ -20,7 +20,7 @@ $id=$_GET['id'];
         }
     } catch (PDOException $erro) {
         echo "Erro: ".$erro->getMessage();
-		 echo '<script>location.href="http://localhost/projetoValiacao/"</script>';
+		 echo '<script>location.href="http://localhost/projetoValiacao/index.php/#divb"</script>';
 			
     }
 

@@ -2,6 +2,9 @@
 require_once('Connection.php');
 
 
+
+
+
 	
 if(isset($_POST['EditarProduto'])){
 	
@@ -23,7 +26,7 @@ if(isset($_POST['EditarProduto'])){
 if ($stmt->execute()) {
            
                   echo "<script>alert('Alterado com sucesso!');</script>";
-			  echo '<script>location.href="http://localhost/projetoValiacao/"</script>';
+			  echo '<script>location.href="http://localhost/projetoValiacao/index.php/#divb"</script>';
              
           
 }
@@ -64,6 +67,7 @@ try {
     }
 
 }
+
 
 
 ?>
