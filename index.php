@@ -2,9 +2,6 @@
 
 <?php 
 require_once('Connection.php');
-//echo  $con = Connection::getConn();//$con = new PDO('mysql: host=localhost; dbname=leilao;', 'root', '');
-//$con = Connection::getConn();
-
 
 
 
@@ -26,21 +23,11 @@ require_once('Connection.php');
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 
-    <!-- HTML5 shim e Respond.js para suporte no IE8 de elementos HTML5 e media queries -->
-    <!-- ALERTA: Respond.js não funciona se você visualizar uma página file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
+</head>
   <body>
     <h1 style="text-align:center;margin-top:30px;">CADASTRO DE PRODUTOS</h1>
 	
 	 
-	 <!-- O INPUT SELECT ESTÁ PREENCHIDA COM OS NOMES DOS LEILÕES CADASTRADOS NO BANCO DE DADOS 
-	 O USUÁRIO ESCOLHE O NOME DO LEILÃO E CLICA EM UM DOS BOTÕES PARA ACESSAR A PÁGINA DE INTERESSE.
-	 
-	 O FORMULÁRIO ENVIA OS DADOS UM DOCUMENTO PHP QUE FILTRA A INTENÇÃO DO USUÁRIO E DIRECIONA PARA A PÁGINA CORRESPONDENTE-->
 	<div style="text-align:center;margin-top:10%;"class="container">
   <div class="row">
     <div class="col align-self-start">
