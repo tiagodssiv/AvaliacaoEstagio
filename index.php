@@ -477,9 +477,7 @@ function preencherEditar(id){
 	  
      data: {dados:dados},
      success: function(msg){
-		 
- //alert(msg);
-//  $("#tab").hide();
+		
        $("#tab").html("");
 	   $("#tab").html(msg);
     }	
