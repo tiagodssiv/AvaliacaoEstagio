@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 03-Ago-2022 às 00:48
+-- Tempo de geração: 12-Ago-2022 às 07:20
 -- Versão do servidor: 10.4.24-MariaDB
 -- versão do PHP: 7.4.29
 
@@ -29,19 +29,24 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `categorias` (
   `id_categorias` int(11) NOT NULL,
-  `nome_categoria` text NOT NULL
+  `nome_categoria` text NOT NULL,
+  `id_fabricant` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Extraindo dados da tabela `categorias`
 --
 
-INSERT INTO `categorias` (`id_categorias`, `nome_categoria`) VALUES
-(1, 'pintura'),
-(2, 'automotivo'),
-(3, 'tinta3'),
-(6, ''),
-(7, 'casa');
+INSERT INTO `categorias` (`id_categorias`, `nome_categoria`, `id_fabricant`) VALUES
+(105, 'tinta', 60),
+(106, 'casa', 61),
+(107, 'piso', 61),
+(108, 'pintura', 61),
+(109, 'cerveja', 62),
+(110, 'refrigerante', 62),
+(111, 'achocolatado', 62),
+(112, 'casa', 63),
+(113, 'rejunte', 64);
 
 -- --------------------------------------------------------
 
@@ -59,13 +64,11 @@ CREATE TABLE `fabricantes` (
 --
 
 INSERT INTO `fabricantes` (`id_fabricantes`, `nome_fabricantes`) VALUES
-(1, 'suvinil'),
-(2, 'tapetesLtd'),
-(3, 'suvinil'),
-(4, 'TintasSv'),
-(5, 'TintasSv'),
-(6, 'fabrimar'),
-(7, '');
+(60, 'suvinil'),
+(61, 'utilitariosLTD'),
+(62, 'Ambev'),
+(63, 'Rei dos azulejos'),
+(64, 'quartzoliti');
 
 -- --------------------------------------------------------
 
@@ -80,6 +83,15 @@ CREATE TABLE `produtos` (
   `id_fabricante` int(11) NOT NULL,
   `preco` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Extraindo dados da tabela `produtos`
+--
+
+INSERT INTO `produtos` (`id_produto`, `nome`, `id_categoria`, `id_fabricante`, `preco`) VALUES
+(29, 'nescau', 111, 62, '15,00'),
+(30, 'Tintura de parede', 112, 63, '2,00'),
+(31, 'Rejunte de 4 kg', 105, 60, '10,00');
 
 --
 -- Índices para tabelas despejadas
@@ -111,19 +123,19 @@ ALTER TABLE `produtos`
 -- AUTO_INCREMENT de tabela `categorias`
 --
 ALTER TABLE `categorias`
-  MODIFY `id_categorias` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_categorias` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
 
 --
 -- AUTO_INCREMENT de tabela `fabricantes`
 --
 ALTER TABLE `fabricantes`
-  MODIFY `id_fabricantes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_fabricantes` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT de tabela `produtos`
 --
 ALTER TABLE `produtos`
-  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_produto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
