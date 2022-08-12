@@ -22,6 +22,7 @@ require_once('Connection.php');
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
+ 	
 
 </head>
   <body>
@@ -34,16 +35,16 @@ require_once('Connection.php');
 <form action="fabricanteCategoria.php" method="post">
   <div class="mb-3">
     <label Style="margin-Right:85%;color:#4169E1;" for="exampleInputEmail1" class="form-label">FABRICANTE</label>
-    <input placeholder="Digite um nome de Fabricante"type="text" name="fabricante"class="form-control" id="fabricante" aria-describedby="emailHelp">
+    <input placeholder="Digite um nome de Fabricante"type="text"id="fabricante"class="form-control" id="fabricante" aria-describedby="emailHelp">
   </div>
    <div class="mb-3">
     <label Style="margin-Right:85%;color:#4169E1;"  for="exampleInputEmail1" class="form-label">CATEGORIA </label>
-   <input type="text" placeholder="Digite uma Categoria do Produto"name="categoria1"class="form-control" id="fabricante" aria-describedby="emailHelp">
+   <input type="text" placeholder="Digite uma Categoria do Produto"id="categoria1"class="form-control" id="fabricante" aria-describedby="emailHelp">
   </div>
     <div class="mb-3">
     <label Style="margin-Right:85%;color:#4169E1;" for="exampleInputEmail1" class="form-label">CATEGORIA </label>
 <div class="col align-self-center">
-          <input placeholder="Digite uma Categoria do Produto"type="text" name="categoria2"class="form-control" id="fabricante" aria-describedby="emailHelp">
+          <input placeholder="Digite uma Categoria do Produto"type="text" id="categoria2"class="form-control" id="fabricante" aria-describedby="emailHelp">
   
     </div> </div>
 
@@ -54,10 +55,10 @@ require_once('Connection.php');
 
  <div class="mb-3">
     <label Style="margin-Right:88%;color:#4169E1; for="exampleInputPassword1" class="form-label">CATEGORIA </label>
-    <input placeholder="Digite uma Categoria do Produto"type="text" name="categoria3"class="form-control" id="exampleInputPassword1">
+    <input placeholder="Digite uma Categoria do Produto"type="text" id="categoria3"class="form-control" id="exampleInputPassword1">
   </div>
   
-  <button type="submit" name="scf"class="btn btn-primary">SALVAR CATEGORIA E FABRICANTE</button>
+  <a onclick="salvarCategoriFabricant();" id="scf"class="btn btn-primary">SALVAR CATEGORIA E FABRICANTE</a>
 </form >
     </div>
  <!--   <div class="col align-self-center">
@@ -73,56 +74,14 @@ require_once('Connection.php');
     <label Style="margin-Right:85%;color:#4169E1;"  for="exampleInputEmail1" class="form-label">FABRICANTE</label>
  
  
- <select name="fabrica"class="form-select" aria-label="Default select example">
-  <option selected>SELECIONAR FABRICANTE</option>
-  <?php 
-		   $stmt = $conexao->prepare("SELECT * FROM fabricantes ORDER BY id_fabricantes DESC");
- 
-        if ($stmt->execute()) {
-            while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
-				?>
-				 <option value="<?php echo $rs->id_fabricantes; ?>"><?php echo $rs->nome_fabricantes; ?></option>
- 
-
-				
-		<?php
-		
-		}
-		}
-		
-		?>
-	
-
- 
- 
- 
- 
- 
-  </select></div>
+ <select name="fabrica"id="fabri" class="form-select" aria-label="Default select example">
+ <!-- preenchido pelo ajax -->
+ </select></div>
     <div class="mb-3">
     <label Style="margin-Right:85%;color:#4169E1;" for="exampleInputEmail1" class="form-label">CATEGORIA</label>
 <div class="col align-self-center">
-       <select name="catego"class="form-select" aria-label="Default select example">
-  <option selected>SELECIONAR CATEGORIA</option>
-  
-  
-  
-   <?php 
-		   $stmt = $conexao->prepare("SELECT * FROM categorias ORDER BY id_categorias DESC");
- 
-        if ($stmt->execute()) {
-            while ($rs = $stmt->fetch(PDO::FETCH_OBJ)) {
-				?>
-				 <option value="<?php echo $rs->id_categorias; ?>"><?php echo $rs->nome_categoria; ?></option>
- 
-
-				
-		<?php
-		
-		}
-		}
-		
-		?>
+       <select id="selet" name="catego"class="form-select" aria-label="Default select example">
+ <!-- preenchido pelo ajax -->
   
   </select>
     </div> </div>
@@ -134,10 +93,10 @@ require_once('Connection.php');
 
  <div class="mb-3">
     <label Style="margin-Right:88%;color:#4169E1; for="exampleInputPassword1" class="form-label">PREÇO</label>
-    <input  placeholder="Digite o Preço do Produto"name="preco"type="text" class="form-control" id="exampleInputPassword1">
+    <input  placeholder="Digite o Preço do Produto"name="preco"type="text" class="form-control" id="preco">
   </div>
   
-  <button name="salvarProduto"type="submit" class="btn btn-primary">SALVAR PRODUTO</button>
+  <button name="salvarProduto" type="submit" class="btn btn-primary">SALVAR PRODUTO</button>
 </form>
     </div>
   </div>
@@ -403,13 +362,199 @@ else{
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous"></script>
 
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-maskmoney/3.0.2/jquery.maskMoney.min.js"></script>
+
+ 
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  
 
 
 <script>
+var i = setInterval(function () {
+    
+    clearInterval(i);
+  
+    // O código desejado é apenas isto:
+ window.history.replaceState('Object', 'Titulo da Página', 'http://localhost/projetoValiacao/');
 
+}, 2000);
+
+function salvarCategoriFabricant(){
+	
+        var scf="scf";
+        var option="select";
+	    var fab  = $("#fabricante").val();
+		var cad1 = $("#categoria1").val();
+		var cad2 = $("#categoria2").val();
+		var cad3 = $("#categoria3").val();
+		
+		if(fab==""){
+			alert("Infome um Fabricante");
+		}
+		else if(cad1 =="" & cad2 =="" & cad3 ==""){
+			
+				alert("Infome pelo menos uma categoria");
+			
+			
+		}
+		
+		
+		else{
+			
+			
+			//se campo fabricante estiver cheio e pelo menos uma cadegoria 
+			
+					 $.ajax({
+	 
+        type: 'POST',
+        url: "http://localhost/projetoValiacao/fabricanteCategoria.php",
+        dataType: 'json',
+        beforeSend: function () {
+		  $("#scf").attr("disabled", true);
+     
+        },
+        data: {scf:scf,fabricante:fab,categoria1:cad1,categoria2:cad2,categoria3:cad3},
+        success: function (msg){
+			
+			if(msg=="ok"){
+			//limpa todos os campos que foram cadastrados e lista o select com o fabricante cadastrado	
+		 
+		 $("#scf").attr("disabled",false);	
+		 $("#fabricante").val("");
+		 $("#categoria1").val("");
+		 $("#categoria2").val("");
+		 $("#categoria3").val("");
+		 	
+		preencherSelect();	
+			}else{alert(msg);
+				
+		preencherSelect();	
+			
+			}
+			
+			
+		
+			 
+		 }
+		 //fim if
+	
+		   
+		
+		
+		
+		///fim success
+    });//fim ajax
+	   
+		
+			
+		
+			
+			
+			
+		}
+			
+			
+		
+		preencherSelect();		
+			
+		}
+		
+		
+
+//fim método
+
+function preencherSelect(){
+	
+//salvarCategoriFabricant();
+var option="select";
+	
+  $.ajax({
+	 
+        type: 'POST',
+        url: "http://localhost/projetoValiacao/select_fabricante.php",
+        dataType: 'json',
+        beforeSend: function () {
+           $("#fabri").html("<option value=''>Carregando...</option>");
+        },
+        data: {preenc_select:option},
+        success: function (msg){
+		 var lista = msg
+	
+		 $("#fabri").html("<option value=''>Selecione Um Fabricante</option>");
+		 if(lista.length > 0){
+			 
+			 
+			 
+			   for ( var i = 0 ; i < lista.length ; i++ ) {
+				       $('#fabri').append("<option value='"+lista[i].id_fabricantes+"'>"+lista[i].nome_fabricantes+"</option>");
+				//	alert(lista[i].nome);
+	  }//fim for
+			 
+			 
+		 }
+		 //fim if
+	
+		   
+		
+		}
+		
+		///fim success
+    });//fim ajax
+	   
+	 $('#selet').html("<option value=''></option>");
+
+}
+//fim método
+
+
+//preenche select de caategoria de acordo com o id do fabricante
+$('#fabri').change(function() {// fim mudar select fabfi
+	
+var option = $('#fabri').val();
+
+
+  $.ajax({
+        type: 'POST',
+        url: "http://localhost/projetoValiacao/select_fabricante.php",
+        dataType: 'json',
+        beforeSend: function () {
+           $("#selet").html("<option value=''>Carregando...</option>");
+        },
+        data: {id_option:option},
+        success: function (msg){
+			
+			
+		 var lista = msg
+		 $("#selet").html("<option value=''>Selecione Uma Categoria</option>");
+		 if(lista.length > 0){
+			 
+			  for ( var i = 0 ; i < lista.length ; i++ ) {
+				       $('#selet').append("<option value='"+lista[i].id_categorias+"'>"+lista[i].nome_categoria+"</option>");
+			 
+		 }
+	
+		   	//	alert(lista[i].nome);
+	  }//fim for
+		
+		}
+		
+		///fim success
+    });//fim ajax
+	   
+	
+	
+	
+});//fim mudar select fabfi
+
+
+//$( '#id_do_select :selected' ). text()
+		$(function() {
+  $('#preco').maskMoney({ decimal: ',', thousands: '.', precision: 2 });
+  //$('#dinheiroSemZero').maskMoney({ decimal: ',', thousands: '.', precision: 0 });
+ // $('#dinheiroVirgula').maskMoney({ decimal: '.', thousands: ',', precision: 2 });
+});
+	
 
 		function confirmacao(id) {
 
@@ -477,13 +622,14 @@ function preencherEditar(id){
 	  
      data: {dados:dados},
      success: function(msg){
-		
+		 
+ //alert(msg);
+//  $("#tab").hide();
        $("#tab").html("");
 	   $("#tab").html(msg);
     }	
   });
 
-	
 }
   
 </script>
